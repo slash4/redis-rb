@@ -1347,6 +1347,18 @@ class Redis
     end
   end
 
+  # Set a subkey's time to live in seconds.
+  #
+  # @param [String] key
+  # @param [String] subkey
+  # @param [Fixnum] seconds time to live
+  # @return [Boolean] whether the timeout was set or not
+  def expiremember(key, subkey, seconds)
+    synchronize do |client|
+      client.call([:expiremember, key, subkey, seconds], &Boolify)
+    end
+  end
+
   # Add one or more members to a set.
   #
   # @param [String] key
